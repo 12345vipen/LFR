@@ -1,0 +1,128 @@
+int D0=12; 
+int D1=5;
+int D2=4;
+int D3=3;
+int D4=6;
+int ENA = A0; //ENA connected to digital pin 2
+int ENB = A1; //ENB connected to digital pin 7
+int leftMotor1=10;   //brown
+int leftMotor2=9 ;//yellow
+
+int rightMotor1=8 ; //greyint 
+int rightMotor2=11 ; //red
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(D0,INPUT);
+  pinMode(D1,INPUT);
+  pinMode(D2,INPUT);
+  pinMode(D3,INPUT);
+  pinMode(D4,INPUT);
+  pinMode(8,OUTPUT);
+  pinMode(9,OUTPUT);
+  pinMode(10,OUTPUT);
+  pinMode(11,OUTPUT);
+  pinMode(ENA, OUTPUT); // initialize ENA pin as an output
+  pinMode(ENB, OUTPUT); // initialize ENB pin as an output
+
+  Serial.begin(9600);
+}
+
+void loop() {
+int l1=digitalRead(D0);
+int l2=digitalRead(D1);
+int l3=digitalRead(D2);
+int l4=digitalRead(D3);
+int l5=digitalRead(D4);
+Serial.println(l1);
+Serial.println(l2);
+Serial.println(l3);
+Serial.println(l4);
+Serial.println(l5);
+if(l3==0 && l1==1 && l2==1 && l4==1 && l5==1)
+{analogWrite(ENA, 150); // set right motors speed
+  analogWrite(ENB, 150); // set left motors speed
+  forward();
+  
+  }
+  else if(l3==1 && l1==1 && l2==1 && l4==1 && l5==1)
+{
+  analogWrite(ENA, 150); // set right motors speed
+  analogWrite(ENB, 80); // set left motors speed
+  anticlockwise();
+  }
+//  else if(l3==1 && l1==0 && l2==0 && l4==1 && l5==1)
+//{
+//  right();
+//  }
+ else if(l3==0 && l1==0 && l2==0 && l4==1 && l5==1)
+{
+  analogWrite(ENA, 150); // set right motors speed
+  analogWrite(ENB, 150); // set left motors speed
+  forward();
+  }
+  else if(l3==0 && l1==1 && l2==1 && l4==0 && l5==0)
+  {
+    analogWrite(ENA, 150); //set right motors speed
+  analogWrite(ENB, 150); //set left motors speed
+    left();
+    
+    }
+ else if(l3==0 && l1==1 && l2==1 && l4==0 && l5==0)
+{
+  analogWrite(ENA, 150); //set right motors speed
+  analogWrite(ENB, 150); //set left motors speed
+  left();
+}
+ else if(l3==0 && l1==0 && l2==0 && l4==0 && l5==0)
+{
+  delay(2000);
+   if(l3==0 && l1==0 && l2==0 && l4==0 && l5==0)
+{
+  analogWrite(ENA, 0); //set right motors speed
+  analogWrite(ENB, 0); //set left motors speed
+  stopp();
+}
+  else
+  { analogWrite(ENA, 150); // set right motors speed
+  analogWrite(ENB, 150); // set left motors speed  
+    left();
+    }}
+  
+
+}
+void forward()
+{
+  digitalWrite(leftMotor2,HIGH);
+  digitalWrite(leftMotor1,LOW);
+   digitalWrite(rightMotor2,LOW);
+   digitalWrite(rightMotor1,HIGH);
+  }
+  void anticlockwise()
+{
+   digitalWrite(leftMotor1,HIGH);
+   digitalWrite(leftMotor2,LOW);
+   digitalWrite(rightMotor2,HIGH);
+   digitalWrite(rightMotor1,LOW);
+  }
+  void right()
+  {
+   digitalWrite(leftMotor1,LOW);
+   digitalWrite(leftMotor2,HIGH);
+   digitalWrite(rightMotor2,LOW);
+   digitalWrite(rightMotor1,LOW);
+    }
+    void left()
+    {
+   digitalWrite(leftMotor1,LOW);
+   digitalWrite(leftMotor2,LOW);
+   digitalWrite(rightMotor1,HIGH);
+   digitalWrite(rightMotor2,LOW);
+      }
+      void stopp()
+      {
+   digitalWrite(leftMotor1,LOW);
+   digitalWrite(leftMotor2,LOW);
+   digitalWrite(rightMotor2,LOW);
+   digitalWrite(rightMotor1,LOW);
+        }
